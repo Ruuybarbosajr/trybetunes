@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Header from '../components/Header';
 
 export default class Album extends Component {
   render() {
@@ -6,6 +7,7 @@ export default class Album extends Component {
       <div
         data-testid="page-album"
       >
+        <Header />
         oi
       </div>
     );
