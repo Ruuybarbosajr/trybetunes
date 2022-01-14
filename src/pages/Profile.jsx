@@ -8,7 +8,7 @@ export default class Profile extends Component {
         data-testid="page-profile"
       >
         <Header />
-        oi
+        PROFILE
       </div>
     );
   }

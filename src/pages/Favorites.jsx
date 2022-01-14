@@ -8,7 +8,7 @@ export default class Favorites extends Component {
         data-testid="page-favorites"
       >
         <Header />
-        oi
+        FAVORITE
       </div>
     );
   }

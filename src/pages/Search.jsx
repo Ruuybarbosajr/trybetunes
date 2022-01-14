@@ -8,7 +8,7 @@ export default class Search extends Component {
         data-testid="page-search"
       >
         <Header />
-        oi
+        SEARCH
       </div>
     );
   }
