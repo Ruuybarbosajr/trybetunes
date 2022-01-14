@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import MusicCard from '../components/MusicCard';
 import getMusics from '../services/musicsAPI';
 
 export default class Album extends Component {
-  constructor({
-    match: {
-      params: { id },
-    },
-  }) {
+  constructor({ match: { params: { id } } }) {
     super();
 
     this.state = {
@@ -49,6 +46,11 @@ export default class Album extends Component {
   }
 }
 
-// Album.propType = {
-//   match:
-// }
+Album.propTypes = {
+  match: PropTypes.shape({
+    isExact: PropTypes.bool,
+    params: PropTypes.objectOf(PropTypes.string),
+    path: PropTypes.string,
+    url: PropTypes.string,
+  }).isRequired,
+};
