@@ -13,22 +13,16 @@ export default class Login extends Component {
       userName: '',
       isDisabled: true,
       isLogged: false,
-      isLoading: true,
+      isLoading: false,
     };
   }
-
-  endRequest = () => {
-    const { isLoading } = this.state;
-    if (isLoading) return <Loading />;
-    return <Redirect to="/search" />;
-  };
 
   redirecting = (event) => {
     event.preventDefault();
     const { userName } = this.state;
-    this.setState({ isLogged: true }, async () => {
+    this.setState({ isLoading: true }, async () => {
       await createUser({ name: userName });
-      this.setState({ isLoading: false });
+      this.setState({ isLogged: true });
     });
   };
 
@@ -48,31 +42,29 @@ export default class Login extends Component {
   };
 
   render() {
-    const { isDisabled, isLogged } = this.state;
+    const { isDisabled, isLogged, isLoading } = this.state;
+    if (isLogged) return <Redirect to="/search" />;
+    if (isLoading) return <Loading />;
     return (
       <div data-testid="page-login">
-        { isLogged ? (
-          this.endRequest()
-        ) : (
-          <form onSubmit={ this.redirecting }>
-            <label htmlFor="nameIput">
-              <input
-                type="text"
-                data-testid="login-name-input"
-                id="nameIput"
-                placeholder="Nome"
-                onChange={ this.handleChange }
-              />
-            </label>
-            <button
-              type="submit"
-              data-testid="login-submit-button"
-              disabled={ isDisabled }
-            >
-              Entrar
-            </button>
-          </form>
-        ) }
+        <form onSubmit={ this.redirecting }>
+          <label htmlFor="nameIput">
+            <input
+              type="text"
+              data-testid="login-name-input"
+              id="nameIput"
+              placeholder="Nome"
+              onChange={ this.handleChange }
+            />
+          </label>
+          <button
+            type="submit"
+            data-testid="login-submit-button"
+            disabled={ isDisabled }
+          >
+            Entrar
+          </button>
+        </form>
       </div>
     );
   }

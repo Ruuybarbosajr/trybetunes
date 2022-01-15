@@ -3,29 +3,46 @@ import PropTypes from 'prop-types';
 
 export default class MusicCard extends Component {
   render() {
-    const { isMusicList } = this.props;
+    const { trackId, previewUrl, trackName, onInputChange, checked } = this.props;
+
     return (
-      <section>
-        { isMusicList.map((music) => (
-          <li key={ music.trackId }>
-            { music.trackName }
-            <audio
-              data-testid="audio-component"
-              src={ music.previewUrl }
-              controls
-            >
-              <track kind="captions" />
-              O seu navegador não suporta o elemento
-              { ' ' }
-              <code>music.trackName</code>
-            </audio>
-          </li>
-        )) }
-      </section>
+      <li>
+        { trackName }
+        <br />
+        <audio
+          data-testid="audio-component"
+          src={ previewUrl }
+          controls
+        >
+          <track kind="captions" />
+          O seu navegador não suporta o elemento
+          { ' ' }
+          <code>{ trackName }</code>
+        </audio>
+        <label htmlFor={ trackId }>
+          <input
+            type="checkbox"
+            name={ trackId }
+            id={ trackId }
+            checked={ checked }
+            onChange={ onInputChange }
+            data-testid={ `checkbox-music-${trackId}` }
+          />
+          Favorita
+        </label>
+      </li>
     );
   }
 }
 
+MusicCard.defaultProps = {
+  checked: false,
+};
+
 MusicCard.propTypes = {
-  isMusicList: PropTypes.arrayOf(PropTypes.object).isRequired,
+  trackName: PropTypes.string.isRequired,
+  previewUrl: PropTypes.string.isRequired,
+  trackId: PropTypes.number.isRequired,
+  onInputChange: PropTypes.func.isRequired,
+  checked: PropTypes.bool,
 };

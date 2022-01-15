@@ -16,6 +16,12 @@ export default class Header extends Component {
     this.getUserName();
   }
 
+  // fix Warning: Can't perform a React state update on an unmounted component
+  // auxílio do summer Rod
+  componentWillUnmount() {
+    this.setState = () => { };
+  }
+
   getUserName = async () => {
     const userObj = await getUser();
     this.setState({ userName: userObj.name });
