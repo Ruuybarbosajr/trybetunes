@@ -4,18 +4,12 @@ import Header from '../components/Header';
 import MusicCard from '../components/MusicCard';
 import getMusics from '../services/musicsAPI';
 import Loading from '../components/Loading';
-import { addSong } from '../services/favoriteSongsAPI';
 
 export default class Album extends Component {
-  constructor({
-    match: {
-      params: { id },
-    },
-  }) {
+  constructor() {
     super();
 
     this.state = {
-      isIdAlbum: id,
       isMusicList: [],
       isAlbumInfo: '',
       isLoading: false,
@@ -27,31 +21,14 @@ export default class Album extends Component {
   }
 
   fetchMusics = async () => {
-    const { isIdAlbum } = this.state;
-    const isMusicListAndInfo = await getMusics(isIdAlbum);
+    const { match: { params: { id } } } = this.props;
+    const isMusicListAndInfo = await getMusics(id);
     this.setState({
       isAlbumInfo: isMusicListAndInfo[0],
       isMusicList: [
         ...isMusicListAndInfo.filter(({ kind }) => kind === 'song'),
       ],
     });
-  };
-
-  sendSong = (target) => {
-    this.setState({ isLoading: true }, async () => {
-      await addSong(target.id);
-      this.setState({ isLoading: false });
-    });
-  }
-
-  handleChange = ({ target }) => {
-    const { name } = target;
-    this.setState({ [name]: target.checked }, () => this.sendSong(target));
-  };
-
-  stateDeconstruction = (trackId) => {
-    const { [trackId]: checkedInput } = this.state;
-    return checkedInput;
   };
 
   render() {
@@ -72,14 +49,13 @@ export default class Album extends Component {
               <p data-testid="artist-name">{ artistName }</p>
             </section>
             <section>
-              { isMusicList.map(({ trackId, previewUrl, trackName }) => (
+              { isMusicList.map((music) => (
                 <MusicCard
-                  key={ trackId }
-                  trackId={ trackId }
-                  previewUrl={ previewUrl }
-                  trackName={ trackName }
-                  checked={ this.stateDeconstruction(trackId) }
-                  onInputChange={ this.handleChange }
+                  key={ music.trackId }
+                  trackId={ music.trackId }
+                  previewUrl={ music.previewUrl }
+                  trackName={ music.trackName }
+                  music={ music }
                 />
               )) }
             </section>
