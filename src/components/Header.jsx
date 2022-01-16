@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { getUser } from '../services/userAPI';
 import Loading from './Loading';
+import Logo from '../css-pages/header/logo.svg';
+import Space from '../css-pages/header/space-user.png';
+import Icone from '../css-pages/header/icon-user.png';
+import '../css-pages/header/header.css';
 
 export default class Header extends Component {
   constructor() {
@@ -30,15 +34,23 @@ export default class Header extends Component {
   render() {
     const { userName } = this.state;
     return (
-      <header data-testid="header-component">
-        <section>
-          { !userName ? (
-            <Loading />
-          ) : (
-            <p data-testid="header-user-name">{ userName }</p>
-          ) }
-        </section>
-        <nav>
+      <header
+        data-testid="header-component"
+        className="header-page"
+      >
+        <div className="container-header">
+          <img src={ Logo } alt="logo-trybetunes" className="logo-img" />
+          <section className="section-name-user">
+            <img src={ Space } alt="" className="space-img" />
+            <img src={ Icone } alt="" className="icon-img" />
+            { !userName ? (
+              <Loading className="name-user" />
+            ) : (
+              <p data-testid="header-user-name" className="name-user">{ userName }</p>
+            ) }
+          </section>
+        </div>
+        <nav className="nav-page">
           <li>
             <Link
               to="/search"

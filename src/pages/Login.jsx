@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import Loading from '../components/Loading';
 import { createUser } from '../services/userAPI';
+import '../css-pages/login/login.css';
+import Logo from '../css-pages/login/logo.png';
 
 const MIN_LENGTH_NAME = 3;
 
@@ -44,10 +46,13 @@ export default class Login extends Component {
   render() {
     const { isDisabled, isLogged, isLoading } = this.state;
     if (isLogged) return <Redirect to="/search" />;
-    if (isLoading) return <Loading />;
+    if (isLoading) return <Loading className="loading-login" />;
     return (
-      <div data-testid="page-login">
-        <form onSubmit={ this.redirecting }>
+      <div data-testid="page-login" className="div-login">
+        <section className="section-img-login">
+          <img src={ Logo } alt="logo-trybetunes" />
+        </section>
+        <form onSubmit={ this.redirecting } className="form-login">
           <label htmlFor="nameIput">
             <input
               type="text"
