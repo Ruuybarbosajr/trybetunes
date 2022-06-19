@@ -1,4 +1,4 @@
-# Boas vindas ao repositório do projeto TrybeTunes!
+# Boas vindas ao repositório do TrybeTunes!
 
 # Habilidades
 Neste projeto, verificamos se voce é capaz de:
